@@ -6,7 +6,12 @@ const SummonerHelper = require("../helpers/summoner.helper");
 
 exports.findAll = async (req, res) => {
     try {
-        const tournaments = await Tournament.find().populate("autor").populate("clasificacionMinima");
+        let hoy = Date.now();
+        console.log(hoy.toLocaleString());
+        let tournaments = await Tournament.find().sort({ fechaInicio: 'asc' }).populate("autor").populate("clasificacionMinima");
+
+        tournaments.sort((a, b) => b.clasificacionMinima.tier - a.clasificacionMinima.tier)
+
         res.json(tournaments);
     } catch (error) {
         console.log(error);
@@ -16,11 +21,11 @@ exports.findAll = async (req, res) => {
 
 exports.create = async (req, res) => {
     try {
-        const { nombre, privado, premio, cupo, fechaInicio, fechaFin, tierMinimo } = req.body;
+        const { nombre, privado, premio, cupo, fechaInicio, fechaFin, clasificacionMinima } = req.body;
 
         const user = req.user;
 
-        const clasificacion = await League.findOne({ 'tier': tierMinimo });
+        const clasificacion = await League.findOne({ 'tier': clasificacionMinima });
 
         if (!clasificacion) return res.status(404).json({ msg: "Clasificacion invalida" });
 
@@ -98,7 +103,6 @@ exports.delete = async (req, res) => {
 
         if (!tournament) return res.status(404).json({ msg: "El torneo no existe" });
 
-
         await Tournament.findOneAndRemove({ _id: req.params.id });
         res.json({ msg: "Torneo eliminado" });
 
@@ -147,8 +151,6 @@ exports.findAllByRank = async (req, res) => {
         const clasificacion = await League.findOne({ 'name': req.params.tier_name.toUpperCase() });
 
         if (!clasificacion) return res.status(404).json({ msg: "Clasificacion invalida" });
-
-        // const tournaments = await Tournament.find({ 'clasificacionMinima': clasificacion }).populate("autor");
 
         const tournaments = await Tournament.find().populate("autor").populate("clasificacionMinima");
 

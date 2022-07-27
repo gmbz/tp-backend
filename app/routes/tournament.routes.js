@@ -3,7 +3,7 @@ const router = Router();
 const tournamentController = require("../controllers/tournament.controller");
 const { verifyToken } = require("../middlewares/verifyToken");
 
-router.get("/", tournamentController.findAll)
+router.get("/", tournamentController.findAll);
 
 router.post("/", verifyToken, tournamentController.create);
 
