@@ -236,7 +236,7 @@ async function cargaParticipantes() {
             if (valido) {
                 tournament.participantes.push(summoner);
                 tournament.cupo -= 1;
-                tournament = await Tournament.findByIdAndUpdate({ _id: tournament._id }, tournament, { new: true }).populate({ path: "participantes", populate: { path: "rankedSolo" } });
+                tournament = await Tournament.findByIdAndUpdate({ _id: tournament._id }, tournament, { new: true }).populate("clasificacionMinima");
                 console.log(`Participante ${summoner.summonerName} agregado al torneo ${tournament.nombre}`);
             }
         }
