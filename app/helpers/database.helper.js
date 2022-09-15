@@ -143,7 +143,7 @@ const tournaments = [
 
 ]
 
-const participantes = ["RiceShampoo", "Darvius", "Lykosito", "NeroJo", 
+const participantes = ["Seemmacrovel", "Darvius", "Lykosito", "NeroJo", 
     "Sheidaari", "jaimit01", "Moouusee", "Alexchan19", "PopvlarMonster", 
     "clazt", "nachishalke", "Spooky Buggie", "SLASHZERLOWZ", 
     "simetrius", "Arkhannes", "Umogus"];
@@ -217,6 +217,7 @@ async function cargaParticipantes() {
                 summoner = await summonerHelper.findSummonerByNameLOLAPI(participante);
             }
 
+            // console.log(summoner);
             let valido = true;
 
             if (tournament.cupo === 0) {

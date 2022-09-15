@@ -53,6 +53,7 @@ exports.findSummonerByNameLOLAPI = async (summonerName) => {
         }
         await ranked.save();
     }
+    console.log(summoner);
     await summoner.save();
     return summoner;
 }

@@ -80,7 +80,7 @@ exports.update = async (req, res) => {
 
 exports.findOne = async (req, res) => {
     try {
-        let tournament = await Tournament.findById(req.params.id).populate({ path: "participantes", populate: { path: "rankedSolo" } }).populate({ path: "participantes", populate: { path: "rankedFlex" } }).populate("autor", "-password");
+        let tournament = await Tournament.findById(req.params.id).populate({ path: "participantes", populate: { path: "rankedSolo" } }).populate({ path: "participantes", populate: { path: "rankedFlex" } }).populate("autor", "-password").populate("clasificacionMinima");
 
         if (!tournament) return res.status(404).json({ msg: "El torneo no existe" });
 

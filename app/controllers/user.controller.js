@@ -39,7 +39,13 @@ exports.signin = async (req, res) => {
             expiresIn: 86400 // 24 hours
         });
 
-        res.status(200).json({ token });
+        let response = {
+            id: user._id,
+            username: user.username,
+            token: token,
+        }
+
+        res.status(200).json(response);
 
     } catch (error) {
         console.log(error);
